@@ -1,0 +1,11 @@
+package sample03;
+
+public class HelloSpring {
+
+	public static void main(String[] args) {
+
+	}
+
+}
+
+// 스프링 설정 파일 - applicationContext.xml 보통 src에 만든다 (Spring Bean Configuration File)

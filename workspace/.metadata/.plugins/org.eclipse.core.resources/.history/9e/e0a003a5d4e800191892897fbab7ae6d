@@ -1,0 +1,5 @@
+package sample04;
+
+public interface Calc {
+	id calculate(int x, int y);
+}
