@@ -1,22 +1,27 @@
 package sample05;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import lombok.Setter;
 
 @Component // xml
 @ComponentScan("com.conf") // 환경설정
 @Scope("prototype")
 public class SungJukInput implements SungJuk {
+	//@Autowired
+	//private ArrayList<SungJukDTO2> list;
+	
+	@Qualifier("list")
 	@Autowired
-	private ArrayList<SungJukDTO2> list;
+	private List<SungJukDTO2> list;
+	@Autowired
 	private SungJukDTO2 sungJukDTO2;
+	
 
 	@Override
 	public void execute() {
