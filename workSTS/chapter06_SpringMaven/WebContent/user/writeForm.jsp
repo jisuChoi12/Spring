@@ -37,7 +37,7 @@ td {
 			<tr align="center">
 				<td colspan="2"><input type="button" value="등록" id="writeBtn"
 					onclick="checkWrite()">&ensp; <input type="reset"
-					id="resetBtn" value="초기화"></td>
+					id="resetBtn" value="초기화"><div id="divDiv"></div></td>
 			</tr>
 		</table>
 	</form>
@@ -59,14 +59,18 @@ td {
 				} else if ($('#pwd').val() == "") {
 					$('#pwdDiv').text("비밀번호를 입력하세요").css('color', 'red').css(
 							'font-size', '7pt').css('font-weight', 'bold');
-				} else {
+				} else if ($('#idDiv').text() != '사용 가능한 아이디') {
+					$('#divDiv').text("아이디가 입력되지 않았거나 중복되는 아이디입니다.").css('color', 'red').css(
+							'font-size', '7pt').css('font-weight', 'bold');
+				}
+				else {
 					$.ajax({
 						type : 'POST',
 						url : '/chapter06_SpringMaven/user/write',
 						data : $('#writeForm').serialize(),
 						success : function() {
 							alert("등록 완료");
-							location.href='/chapter06_SpringMaven/main/index';
+							location.href='http://localhost:8080/chapter06_SpringMaven/main/index';
 						},
 						error : function() {
 							alert("등록 실패");
@@ -77,6 +81,33 @@ td {
 			});
 	$('#resetBtn').click(function() {
 		$('div').empty();
+	});
+	
+	$('#id').blur(function(){
+		if($('#id').val()==''){
+			$('#idDiv').text("먼저 아이디를 입력하세요").css('color', 'red').css(
+					'font-size', '7pt').css('font-weight', 'bold');
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/chapter06_SpringMaven/user/isExistId',
+				data : {'id' : $('#id').val()},
+				dataType : 'json',
+				success : function(data){
+					$('#idDiv').empty();
+					if(data.userDTO == null){
+						$('#idDiv').text("사용 가능한 아이디").css('color', 'blue').css(
+								'font-size', '7pt').css('font-weight', 'bold');
+					} else {
+						$('#idDiv').text("사용 불가능한 아이디").css('color', 'red').css(
+								'font-size', '7pt').css('font-weight', 'bold');
+					}
+				},
+				error : function(){
+					 alert("에러 :D");
+				}
+			});
+		}
 	});
 </script>
 </html>

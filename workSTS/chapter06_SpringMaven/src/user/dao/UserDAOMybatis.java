@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import user.bean.UserDTO;
 
+// DB
 @Transactional
 @Repository("userDAO")
 public class UserDAOMybatis implements UserDAO{
@@ -49,6 +50,11 @@ public class UserDAOMybatis implements UserDAO{
 	@Override
 	public List<UserDTO> userSearch(Map<String, String> map) {
 		return sqlSession.selectList("userSQL.userSearch",map);
+	}
+
+	@Override
+	public UserDTO isExistId(String id) {
+		return sqlSession.selectOne("userSQL.isExistId", id);
 	}
 
 }

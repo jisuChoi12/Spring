@@ -22,6 +22,10 @@
 	<delete id="userDelete">
 		delete from usertable where id=#{id}
 	</delete>
+	<!-- 중복체크  -->
+	<select id="isExistId" parameterType="String" resultType="user">
+		select * from usertable where id=#{id}
+	</select>
 	<!-- 검색 -->
 	<!-- <select id="userSearch" parameterType="java.util.Map" resultType="user">
 		select * from usertable where

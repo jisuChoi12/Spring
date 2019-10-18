@@ -38,8 +38,8 @@ li {
 			<ul>
 				<li><a id="mainA" href="/chapter06_SpringMaven/user/writeForm">입력</a></li>
 				<li><a id="mainA" href="../user/list">출력</a></li>
-				<li><a id="mainA" href="/chapter06_SpringMaven/">수정</a></li>
-				<li><a id="mainA" href="/chapter06_SpringMaven/">삭제</a></li>
+				<li><a id="mainA" href="../user/modifyForm">수정</a></li>
+				<li><a id="mainA" href="../user/deleteForm">삭제</a></li>
 			</ul>
 		</div>
 	</div>

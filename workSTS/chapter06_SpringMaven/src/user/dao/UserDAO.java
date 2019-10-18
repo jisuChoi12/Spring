@@ -19,4 +19,6 @@ public interface UserDAO {
 
 	public List<UserDTO> userSearch(Map<String, String> map);
 
+	public UserDTO isExistId(String id);
+
 }
