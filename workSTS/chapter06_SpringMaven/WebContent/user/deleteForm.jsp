@@ -44,7 +44,8 @@
 									alert("삭제 완료");
 									location.href='http://localhost:8080/chapter06_SpringMaven/main/index';
 								},
-								error : function(){
+								error : function(err){
+									console.log(err);
 									alert("에러");
 								}
 							});

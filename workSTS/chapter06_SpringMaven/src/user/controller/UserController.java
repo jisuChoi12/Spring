@@ -1,16 +1,20 @@
 package user.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.json.JSONArray;
 import user.bean.UserDTO;
 import user.service.UserService;
 
@@ -37,13 +41,23 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/user/getList", method = RequestMethod.POST)
-	public ModelAndView getList() {
+	@ResponseBody // 응답 요청 객체가 없음
+	public Map<String, Object> getList() {
 		List<UserDTO> list = userService.getList();
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("jsonView"); // viewResolver말고 jsonView를 거쳐서 가라(json표기법으로 변환) setViewName("xml에 지정된 id")	
-		return mav;
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", jsonArray);
+		return map;
 	}
+	
+//	@RequestMapping(value="/user/getList", method = RequestMethod.POST)
+//	public ModelAndView getList() {
+//		List<UserDTO> list = userService.getList();
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("list", list);
+//		mav.setViewName("jsonView"); // viewResolver말고 jsonView를 거쳐서 가라(json표기법으로 변환) setViewName("xml에 지정된 id")	
+//		return mav;
+//	}
 	
 	@RequestMapping(value="/user/modifyForm", method = RequestMethod.GET)
 	public String modifyForm() {
@@ -76,13 +90,48 @@ public class UserController {
 		userService.userDelete(id);
 	}
 	
+//	text로 받을 때
 	@RequestMapping(value="/user/isExistId", method = RequestMethod.POST)
-	public ModelAndView isExistId(@RequestParam String id) {
+	@ResponseBody
+	public String isExistId(@RequestParam String id) {
 		UserDTO userDTO = userService.isExistId(id);
+		if(userDTO == null) {
+			return "not_exist";
+		} else {
+			return "exist";
+		}
+	}	
+	
+	@RequestMapping(value="/user/search", method = RequestMethod.POST)
+	public ModelAndView search(@RequestBody Map<String, String> map) { // JSON 형태로 넘겨주는걸 받는 경우
+		List<UserDTO> list = userService.userSearch(map);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("userDTO", userDTO);
-		mav.setViewName("jsonView");
+		mav.addObject("list", list);
+		mav.setViewName("jsonView"); // viewResolver말고 jsonView를 거쳐서 가라(json표기법으로 변환) setViewName("xml에 지정된 id")	
 		return mav;
 	}
+	
+//	@RequestMapping(value="/user/search", method = RequestMethod.POST)
+//	public ModelAndView search(@RequestParam String option, String keyword) {
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("option", option);
+//		map.put("keyword",keyword);
+//		List<UserDTO> list = userService.userSearch(map);
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("list", list);
+//		mav.setViewName("jsonView"); // viewResolver말고 jsonView를 거쳐서 가라(json표기법으로 변환) setViewName("xml에 지정된 id")	
+//		return mav;
+//	}
+	
+//	json으로 받을 때	
+//	@RequestMapping(value="/user/isExistId", method = RequestMethod.POST)
+//	public ModelAndView isExistId(@RequestParam String id) {
+//		UserDTO userDTO = userService.isExistId(id);	
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("userDTO", userDTO);
+//		mav.setViewName("jsonView");
+//		return mav;
+//	}
+	
 }
 

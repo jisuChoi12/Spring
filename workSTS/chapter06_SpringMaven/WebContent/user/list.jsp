@@ -8,13 +8,26 @@
 <title>list</title>
 </head>
 <body>
-	<a href="/chapter06_SpringMaven/main/index"><img src="../image/pandaJr.png" width="40" /></a>
+	<a href="/chapter06_SpringMaven/main/index"><img style="margin-left: 140px;" src="../image/pandaJr.png" width="50" /></a>
+	<div style="margin-bottom: 20px; margin-top: 10px; margin-left: 30px;">
+		<select id="searchOption" name="searchOption" style="padding: 2px;">
+			<option value="" selected="selected">--선택--</option>
+			<option value="name" id="name">이름</option>
+			<option value="id" id="id">아이디</option>
+		</select>
+		<input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요" >
+		<input type="button" id="sBtn" value="검색">
+		<div id="sDiv"></div>
+	</div>
 	<table id="table" cellpadding="5" cellspacing="0">
-		<tr>
-			<th width="100">이름</th>
-			<th width="100">아이디</th>
-			<th width="100">비밀번호</th>
-		</tr>
+		<thead>
+			<tr>
+				<th width="100">이름</th>
+				<th width="100">아이디</th>
+				<th width="100">비밀번호</th>
+			</tr>
+		</thead>
+		<tbody id="tbody"></tbody>
 	</table>
 </body>
 <script type="text/javascript"
@@ -41,7 +54,7 @@
 						})).append($('<td/>',{
 							align : 'center',
 							text : items.pwd
-						})).appendTo('#table');
+						})).appendTo('#tbody');
 				});
 				
 			},
@@ -49,6 +62,42 @@
 				alert("따란~ 에러입니다 :D");
 			}
 		});
+	});
+	
+	$('#sBtn').click(function(){
+		$('#sDiv').empty();
+		if($('#searchOption option:selected').val()==''){
+			$('#sDiv').text("검색 옵션을 선택해주세요").css('color', 'red').css('font-size', '7pt').css('font-weight', 'bold');
+		} else if($('#keyword').val()==''){
+			$('#sDiv').text("검색어를 입력해주세요").css('color', 'red').css('font-size', '7pt').css('font-weight', 'bold');
+		} else {
+			$('#tbody').empty();
+			$.ajax({
+				type : 'POST',
+				url : '/chapter06_SpringMaven/user/search',
+				data :  JSON.stringify({'option' : $('#searchOption').val(), 'keyword' : $('#keyword').val()}), 
+				dataType : 'json',
+				contentType : 'application/json;charset=UTF-8', // json으로 넘겨줄 경우 contentType을 지정해줘야 한다
+				success : function(data){
+					$.each(data.list, function(index,items){
+						$('<tr/>').append($('<td/>',{
+								align : 'center',
+								text : items.name
+							})).append($('<td/>',{
+								align : 'center',
+								text : items.id
+							})).append($('<td/>',{
+								align : 'center',
+								text : items.pwd
+							})).appendTo('#tbody');
+					});
+				},
+				error : function(err){
+					console.log(err);
+					alert("에러");
+				} 
+			});
+		}
 	});
 </script>
 </html>

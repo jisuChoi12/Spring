@@ -47,6 +47,7 @@ td {
 <script type="text/javascript">
 	$('#writeBtn').click(
 			function() {
+				var checkId = $('#idDiv').text();
 				$('#nameDiv').empty();
 				$('#idDiv').empty();
 				$('#pwdDiv').empty();
@@ -59,7 +60,7 @@ td {
 				} else if ($('#pwd').val() == "") {
 					$('#pwdDiv').text("비밀번호를 입력하세요").css('color', 'red').css(
 							'font-size', '7pt').css('font-weight', 'bold');
-				} else if ($('#idDiv').text() != '사용 가능한 아이디') {
+				} else if (checkId != '사용 가능한 아이디') {
 					$('#divDiv').text("아이디가 입력되지 않았거나 중복되는 아이디입니다.").css('color', 'red').css(
 							'font-size', '7pt').css('font-weight', 'bold');
 				}
@@ -83,7 +84,7 @@ td {
 		$('div').empty();
 	});
 	
-	$('#id').blur(function(){
+	/* $('#id').blur(function(){ // .focusout
 		if($('#id').val()==''){
 			$('#idDiv').text("먼저 아이디를 입력하세요").css('color', 'red').css(
 					'font-size', '7pt').css('font-weight', 'bold');
@@ -103,8 +104,37 @@ td {
 								'font-size', '7pt').css('font-weight', 'bold');
 					}
 				},
-				error : function(){
-					 alert("에러 :D");
+				error : function(err){
+					console.log(err); 
+					alert("에러");
+				}
+			});
+		}
+	}); */
+	$('#id').focusout(function(){ // .focusout
+		$('#idDiv').empty();
+		if($('#id').val()==''){
+			$('#idDiv').text("먼저 아이디를 입력하세요").css('color', 'red').css(
+					'font-size', '7pt').css('font-weight', 'bold');
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/chapter06_SpringMaven/user/isExistId',
+				data : {'id' : $('#id').val()},
+				dataType : 'text',
+				success : function(data){
+					$('#idDiv').empty();
+					if(data == 'not_exist'){
+						$('#idDiv').text("사용 가능한 아이디").css('color', 'blue').css(
+								'font-size', '7pt').css('font-weight', 'bold');
+					} else if (data == 'exist') {
+						$('#idDiv').text("사용 불가능한 아이디").css('color', 'red').css(
+								'font-size', '7pt').css('font-weight', 'bold');
+					}
+				},
+				error : function(err){
+					console.log(err); 
+					alert("에러");
 				}
 			});
 		}

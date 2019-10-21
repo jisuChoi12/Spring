@@ -28,7 +28,13 @@
 	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="0"></property> <!-- order를 0으로 만들어서 이걸 먼저 처리하게 -->
 	</bean>
+	
 	<mvc:annotation-driven/>
 	<mvc:resources mapping="/image/**" location="/image/"></mvc:resources>
+	<!-- <mvc:annotation-driven> 이 안에 기본적으로 들어있음 따로 적어주지 않아도 괜찮다
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven> -->
 	
 </beans>
