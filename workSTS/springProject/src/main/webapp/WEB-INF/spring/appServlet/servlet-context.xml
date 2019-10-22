@@ -27,6 +27,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- json -->
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<beans:property name="contentType" value="text/html;charset=UTF-8"></beans:property>
+	</beans:bean>
+	<!-- Controller와 xml 매핑/연결... list안에 담긴 dto의 이름과 json의 이름을 같게해야함 그래야 jsonView에서 변환 가능 -->
+	<beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"></beans:property> <!-- order를 0으로 만들어서 이걸 먼저 처리하게 -->
+	</beans:bean>
+	
 	<context:component-scan base-package="com.spring.springProject" />
 	
 	

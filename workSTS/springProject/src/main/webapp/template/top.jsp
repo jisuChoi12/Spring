@@ -11,13 +11,13 @@
 <font size="3" style="font-weight: bold;">
 	<c:if test="${sessionScope.memId != null }">
 		<!-- 로그인 상태 -->
-		<a href="/miniproject/board/boardWriteForm.do" style="color: white;">글쓰기</a>&emsp;
-		<c:if test="${sessionScope.memId == 'admin' }">
-			<a href="/miniproject/imageboard/imageBoardWriteForm.do" style="color: white;">이미지등록</a>
+		<a href="/springProject/board/boardWriteForm" style="color: white;">글쓰기</a>&emsp;
+		<c:if test="${sessionScope.memId eq 'admin' }">
+			<a href="/springProject/imageboard/imageBoardWriteForm" style="color: white;">이미지등록</a>
 			<!-- 로그인 아이디가 admin 비밀번호는 111 -->
 			&emsp;
 		</c:if>
-		<a href="/miniproject/imageboard/imageboardList.do?pg=1" style="color: white;">이미지목록</a>&emsp;
-	</c:if> <a href="/miniproject/board/boardList.do?pg=1" style="color: white;">목록</a>
+		<a href="/springProject/imageboard/imageboardList?pg=1" style="color: white;">이미지목록</a>&emsp;
+	</c:if> <a href="/springProject/board/boardList?pg=1" style="color: white;">목록</a>
 </font>
 

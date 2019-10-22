@@ -44,7 +44,7 @@ public class UserController {
 	@ResponseBody // 응답 요청 객체가 없음
 	public Map<String, Object> getList() {
 		List<UserDTO> list = userService.getList();
-		JSONArray jsonArray = JSONArray.fromObject(list);
+		JSONArray jsonArray = JSONArray.fromObject(list); // list를 json으로 바꾸는 메소드
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", jsonArray);
 		return map;

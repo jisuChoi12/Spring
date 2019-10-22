@@ -4,8 +4,9 @@
 ${sessionScope.memName }님 로그인
 <br>
 <br>
-<input type="button" value="로그아웃"
-	onclick="location.href='/springProject/member/logout'" style="width: 100%; border: 0; outline: 0;">
+<input type="button" value="로그아웃" id="logoutBtn" style="cursor:pointer; width: 100%; border: 0; outline: 0;">
 <input type="submit" value="회원정보수정 "
-	onclick="location.href='/springProject/member/modifyForm'" style="width: 100%; border: 0; outline: 0;">
+	onclick="location.href='/springProject/member/modifyForm'" style="cursor:pointer; width: 100%; border: 0; outline: 0;">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../js/member.js" type="text/javascript"></script>
 
