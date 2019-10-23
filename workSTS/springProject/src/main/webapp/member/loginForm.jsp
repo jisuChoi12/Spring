@@ -3,7 +3,7 @@
 	
 <form name="loginForm" method="post"
 	action="/springProject/member/login">
-	<table border="0" cellspacing="0" cellpadding="5" style="width: 260px">
+	<table border="0" cellspacing="0" cellpadding="5" style="width: 300px;">
 		<tr>
 			<th>아이디</th>
 			<td>

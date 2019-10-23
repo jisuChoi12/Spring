@@ -10,3 +10,6 @@ ${sessionScope.memName }님 로그인
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="../js/member.js" type="text/javascript"></script>
 
+<!-- pageScope -> requestScope -> sessionScope 순으로 찾는다 -->
+<!-- ${sessionScope.memName} 대신 ${memName} 해도 괜찮음 -->
+

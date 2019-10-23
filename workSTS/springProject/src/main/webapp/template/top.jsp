@@ -4,7 +4,7 @@
 
 <h3 style="color: white;">
 	<img src="../image/pandaJr.png" width="70" height="70"
-		onclick="location.href='/miniproject/main/index.do'"
+		onclick="location.href='/springProject/main/index'"
 		style="cursor: pointer"><br>MVC를 이용한 미니프로젝트
 </h3>
 <br>
@@ -18,6 +18,6 @@
 			&emsp;
 		</c:if>
 		<a href="/springProject/imageboard/imageboardList?pg=1" style="color: white;">이미지목록</a>&emsp;
-	</c:if> <a href="/springProject/board/boardList?pg=1" style="color: white;">목록</a>
+	</c:if> <a href="/springProject/board/boardListForm" style="color: white;">목록</a>
 </font>
 

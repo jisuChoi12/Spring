@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <form name="writeForm" id="writeForm" method="post"
 	action="/springProject/member/write">
 	<table border="1" cellspacing="0" cellpadding="5">
@@ -17,9 +16,8 @@
 			<td align="left">
 				<input id="writeId" type="text" name="id" size=25 placeholder="아이디 입력">
 				<!-- <input type="button" id="checkIdBtn" value=중복체크> -->
-				<input type="hidden" name="check" value="">
+				<input type="hidden" name="check" id="check" value="">
 				<div id="writeIdDiv"></div>
-				<!-- <div id="checkIdDiv"></div> -->
 			</td>
 		</tr>
 
@@ -87,5 +85,5 @@
 		</tr>
 	</table>
 </form>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> <!-- 매번 쓰기 귀찮으면 index.jsp에 한번 적어주기 -->
 <script src="../js/member.js" type="text/javascript"></script>

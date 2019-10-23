@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ import member.bean.MemberDTO;
 import member.bean.ZipcodeDTO;
 import member.service.MemberService;
 
-@Controller
+@Controller // (value="/member"); 이걸 써주면  @RequestMapping할 때 (value="/login") 이런식으로 써도 가능 /는 있어도 없어도 괜찮다
 public class MemberController {
 	@Autowired
 	private MemberService memberService; // DB와 Controller연결
@@ -66,11 +67,21 @@ public class MemberController {
 		return loginResult;
 	}
 
+	// jQuery
 	@RequestMapping(value = "/member/logout", method = RequestMethod.POST)
 	@ResponseBody
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}
+	
+	// location.href
+//	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
+//	@ResponseBody
+//	public ModelAndView logout(HttpSession session) {
+//		session.invalidate();
+//		return new ModelAndView("redirect:/main/index"); // 단순이동
+//	}
+	
 
 	@RequestMapping(value = "/member/writeForm", method = RequestMethod.GET)
 	public ModelAndView writeForm() {
@@ -79,6 +90,12 @@ public class MemberController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	
+//	@RequestMapping(value = "/member/writeForm", method = RequestMethod.GET)
+//	public String writeForm(Model model) {
+//		model.addAttribute("display","/member/writeForm.jsp");
+//		return "/main/index";
+//	}
 
 	@RequestMapping(value = "/member/checkId", method = RequestMethod.POST)
 	@ResponseBody
@@ -102,18 +119,30 @@ public class MemberController {
 	@RequestMapping(value="/member/checkPostForm", method = RequestMethod.GET)
 	public String checkPost() {
 		return "/member/checkPost";
+		// 새 창에서 띄울거니까 display 필요없음 
 	}
 
+//	@RequestMapping(value="/member/checkPost", method = RequestMethod.POST)
+//	public ModelAndView checkPost(@ModelAttribute ZipcodeDTO zipcodeDTO) {
+//		ModelAndView mav = new ModelAndView();
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("sido", zipcodeDTO.getSido());
+//		map.put("sigungu", zipcodeDTO.getSigungu()); 
+//		map.put("roadname", zipcodeDTO.getRoadname()); 
+//		List<ZipcodeDTO> list = memberService.getZipcodeList(map);
+//		mav.addObject("list", list);
+//		mav.setViewName("jsonView");
+//		return mav;
+//	}
+	
 	@RequestMapping(value="/member/checkPost", method = RequestMethod.POST)
-	public ModelAndView checkPost(@ModelAttribute ZipcodeDTO zipcodeDTO) {
-		ModelAndView mav = new ModelAndView();
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sido", zipcodeDTO.getSido());
-		map.put("sigungu", zipcodeDTO.getSigungu()); 
-		map.put("roadname", zipcodeDTO.getRoadname()); 
+	public ModelAndView checkPost(@RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView(); 
 		List<ZipcodeDTO> list = memberService.getZipcodeList(map);
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;
 	}
+	
+	
 }

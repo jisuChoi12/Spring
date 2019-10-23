@@ -50,8 +50,9 @@
 		style="display: inline-block; float: left; text-align: center; width: 100%; cursor: pointer;">${boardPaging.pagingHTML }
 	</div>
 </c:if>
-
-<script type="text/javascript">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> <!-- 매번 쓰기 귀찮으면 index.jsp에 한번 적어주기 -->
+<script src="../js/board.js" type="text/javascript"></script>
+<!-- <script type="text/javascript">
 	function isLogin(seq, pg) {
 		if ("${memId}" == "") {
 			alert("로그인 먼저");
@@ -80,4 +81,4 @@
 		location.href="/miniproject/board/boardSearch.do?searchOption=${searchOption}&keyword=${keyword}&pg="+pg;
 /* 		location.href="/miniproject/board/boardSearch.do?searchOption=${searchOption}&keyword="+encodeURIComponent("${keyword}")+"&pg="+pg; */ 
 	}
-</script>
+</script> -->

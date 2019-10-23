@@ -68,7 +68,7 @@ $('#writeId').focusout(function(){
 					$('#writeIdDiv').text('이미 있는 아이디입니다').css('color','red').css('font-size','8pt');
 				} else {
 					$('#writeIdDiv').text('사용 가능한 아이디입니다').css('color','blue').css('font-size','8pt');
-					checkedId = $('#writeId').val();
+					$('#check').val($('#writeId').val());
 				}
 			},
 			error : function(e){
@@ -91,27 +91,6 @@ $('#writeRePwd').keyup(function(){
 		$('#writeRePwdDiv').empty();
 	}
 });
-
-
-function checkWrite() {
-	if (document.getElementById("irum").value == "") {
-		alert("이름을 입력하세요");
-		document.writeForm.name.focus();
-	} else if (document.writeForm.id.value == "") {
-		alert("아이디를 입력하세요");
-		document.writeForm.id.focus();
-	} else if (document.writeForm.pwd.value == "") {
-		alert("비밀번호를 입력하세요");
-		document.writeForm.pwd.focus();
-	} else if (document.writeForm.repwd.value != document.writeForm.pwd.value) {
-		alert("패스워드가 일치하지 않습니다.");
-		document.writeForm.repwd.focus();
-	} else if (document.writeForm.check.value != document.writeForm.id.value) {
-		alert("중복체크 하세요");
-	} else {
-		document.writeForm.submit();
-	}
-}
 
 $('#writeBtn').click(function(){
 	if($('#writeIdDiv').text()!='사용 가능한 아이디입니다'){
@@ -141,6 +120,7 @@ $('#writeBtn').click(function(){
 			}
 		});
 	}
+	// $('form[name=writeForm]').submit(); id없이 name속성으로 submit하기 
 });
 
 $('#zipcodeBtn').click(function(){
@@ -149,10 +129,13 @@ $('#zipcodeBtn').click(function(){
 
 $('#zipcodeSearchBtn').click(function(){
 	$('#zipcodeSearchDiv').empty();
-	if($('#sido').val()=='시도선택' || $('#roadname').val()==''){
-		$('#zipcodeSearchDiv').text('항목을 입력하세요').css('color','red').css('font-size','8pt');
+	if($('#sido').val()=='시도선택'){
+		$('#zipcodeSearchDiv').text('시도를 선택하세요').css('color','red').css('font-size','8pt');
+	} else if ($('#roadname').val()==''){
+		$('#zipcodeSearchDiv').text('도로명을 입력하세요').css('color','red').css('font-size','8pt'); 	
 	} else {
-		$('#tbody').empty();
+		/*$('#tbody').empty();*/
+		$('#postTable tr:gt(2)').remove();
 		$.ajax({
 			type : 'POST',
 			url : '/springProject/member/checkPost',
@@ -160,13 +143,17 @@ $('#zipcodeSearchBtn').click(function(){
 			dataType : 'json',
 			success : function(data){
 				$.each(data.list, function(index,items){
-					if(items.buildingname==null){
+					/*if(items.buildingname==null){
 						items.buildingname='';
 					}
 					if(items.ri==null){
 						items.ri='';
 					}
+					if(items.sigungu==null){
+						items.sigungu='';
+					}*/
 					var address = items.sido+" "+items.sigungu+" "+items.yubmyundong+" "+items.ri+" "+items.roadname+" "+items.buildingname;
+					address = address.replace(/null/g,''); // null 전체 ''로
 					$('<tr/>').append($('<td/>',{
 						align : 'center',
 						text : items.zipcode
@@ -175,8 +162,16 @@ $('#zipcodeSearchBtn').click(function(){
 						align : 'left'
 					}).append($('<a/>',{
 						href : '#',
-						text : address,
+						id : 'addressA',
+						text : address
 					}))).appendTo('#tbody');
+				}); // each
+				
+				$('a').click(function(){
+					// alert($(this).prop('tagName'));
+					$('#daum_zipcode', opener.document).val($(this).parent().prev().text());
+					$('#daum_addr1', opener.document).val($(this).text());
+					window.close();
 				});
 			},
 			error : function(e){
@@ -187,17 +182,13 @@ $('#zipcodeSearchBtn').click(function(){
 	
 });
 
-$('#tbody').on('click','a',function(){
-//	$('#daum_zipcode').val($(this).text());
-//	$('#daum_addr1').val($(this).parent().parent().children(':first-child').text());
+//$('#tbody').on('click','a',function(){
+////	opener.document.getElementById("daum_zipcode").value = $(this).parent().parent().children(':first-child').text();
+//	opener.document.getElementById("daum_zipcode").value = $(this).parent().prev().text();
+//	opener.document.getElementById("daum_addr1").value = $(this).text();
 //	window.close();
-//	$('#daum_addr2').focus();
-	
-	opener.document.getElementById("daum_zipcode").value = $(this).parent().parent().children(':first-child').text();
-	opener.document.getElementById("daum_addr1").value = $(this).text();
-	window.close();
-	opener.document.getElementById("daum_addr2").focus();
-});
+//	opener.document.getElementById("daum_addr2").focus();
+//});
 
 
 function checkModify(){

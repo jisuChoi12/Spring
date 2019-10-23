@@ -68,25 +68,7 @@ td {
 				<td align="center" colspan="3">주소</td>
 			</tr>
 		</thead>
-		<tbody id="tbody">
-		<%-- <c:if test="${list!=null }">
-			<c:forEach var="zipcodeDTO" items="${list }">
-				<c:set var="address">
-						${zipcodeDTO.sido
-						} ${zipcodeDTO.sigungu
-						} ${zipcodeDTO.yubmyundong
-						} ${zipcodeDTO.ri
-						} ${zipcodeDTO.roadname
-						} ${zipcodeDTO.buildingname }
-					</c:set>
-				<tr>
-					<td align="center">${zipcodeDTO.zipcode }</td>
-					<td colspan="3"><a id="addressA" href="#"
-						onclick="checkPostClose('${zipcodeDTO.zipcode}', '${address }')"><c:out
-								value="${address }" /></a></td>
-				</tr>
-			</c:forEach>
-		</c:if> --%></tbody>
+		<tbody id="tbody"></tbody>
 	</table>
 </form>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
