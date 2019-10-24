@@ -206,3 +206,29 @@ function checkModify(){
 	}
 }
 
+$('#modifyBtn').click(function(){
+	$('#modifyNameDiv').empty();
+	$('#modifyPwdDiv').empty();
+	$('#modifyRePwdDiv').empty();
+	if($('#name').val()==''){
+		$('#modifyNameDiv').text('이름을 입력하세요').css('color','red').css('font-size','8pt');
+	} else if($('#pwd').val()==''){
+		$('#modifyPwdDiv').text('비밀번호를 입력하세요').css('color','red').css('font-size','8pt');
+	} else if($('#repwd').val() != $('#pwd').val()){
+		$('#modifyRePwdDiv').text('비밀번호가 일치하지 않습니다').css('color','red').css('font-size','8pt');
+	} else {
+		$.ajax({
+			type : 'POST',
+			url : '/springProject/member/modify',
+			data : $('#modifyForm').serialize(),
+			success : function(){
+				alert('회원정보 수정이 완료되었습니다! 다시 로그인 해주세요 :D');
+				location.href="/springProject/main/index";
+			},
+			error : function(err){
+				console.log(err);
+			}
+		});
+	}
+});
+

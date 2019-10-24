@@ -39,4 +39,14 @@ public class MemberDAOMyBatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getZipcodeList", map);
 	}
 
+	@Override
+	public MemberDTO getMember(String id) {
+		return sqlSession.selectOne("memberSQL.getMember", id);
+	}
+
+	@Override
+	public void modify(MemberDTO memberDTO) {
+		sqlSession.update("memberSQL.modify",memberDTO);
+	}
+
 }

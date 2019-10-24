@@ -18,6 +18,6 @@
 			&emsp;
 		</c:if>
 		<a href="/springProject/imageboard/imageboardList?pg=1" style="color: white;">이미지목록</a>&emsp;
-	</c:if> <a href="/springProject/board/boardListForm" style="color: white;">목록</a>
+	</c:if> <a href="/springProject/board/boardList" style="color: white;">목록</a>
 </font>
 

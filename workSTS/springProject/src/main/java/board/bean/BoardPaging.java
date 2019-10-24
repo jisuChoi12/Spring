@@ -56,19 +56,19 @@ public class BoardPaging {
 		}
 		
 		if(startPage>pageBlock) { // [이전]이 나오는 시점
-			pagingHTML.append("[<a id='prev' href='boardList.do?pg="+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
+			pagingHTML.append("[<a id='prev' href='boardList?pg="+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
 		}
 		
 		for (int i = startPage; i <= endPage; i++) {
 			if(i==currentPage) {
-				pagingHTML.append("[<a id='currentPaging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='currentPaging' href='boardList?pg="+i+"'>"+i+"</a>]");
 			} else {
-				pagingHTML.append("[<a id='paging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='paging' href='boardList?pg="+i+"'>"+i+"</a>]");
 			}
 		}
 		
 		if(endPage<totalPage) { // [다음]이 나오는 시점
-			pagingHTML.append("[<a id='next' href='boardList.do?pg="+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
+			pagingHTML.append("[<a id='next' href='boardList?pg="+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
 		}
 		
 	}
@@ -88,19 +88,19 @@ public class BoardPaging {
 		}
 		
 		if(startPage>pageBlock) { // [이전]이 나오는 시점
-			pagingHTML.append("[<a id='prev' href='boardSearch.do?searchOption="+searchOption+"&keyword="+keyword+"&pg="+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
+			pagingHTML.append("[<a id='prev' class='"+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
 		}
 		
 		for (int i = startPage; i <= endPage; i++) {
 			if(i==currentPage) {
-				pagingHTML.append("[<a id='currentPaging' href='boardSearch.do?searchOption="+searchOption+"&keyword="+keyword+"&pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='currentPaging' class='"+i+"'>"+i+"</a>]");
 			} else { 
-				pagingHTML.append("[<a id='paging' href='boardSearch.do?searchOption="+searchOption+"&keyword="+keyword+"&pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='paging' class='"+i+"'>"+i+"</a>]");
 			}
 		}
 		
 		if(endPage<totalPage) { // [다음]이 나오는 시점
-			pagingHTML.append("[<a id='next' href='boardSearch.do?searchOption="+searchOption+"&keyword="+keyword+"&pg="+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
+			pagingHTML.append("[<a id='next' class='"+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
 		}
 		
 	}

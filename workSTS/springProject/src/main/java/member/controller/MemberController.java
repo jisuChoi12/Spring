@@ -144,5 +144,30 @@ public class MemberController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/member/modifyForm", method = RequestMethod.GET)
+	public ModelAndView modifyForm(HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/member/modifyForm.jsp");
+		mav.setViewName("/main/index");
+		mav.addObject("memId", (String)session.getAttribute("memId"));
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/getMember", method = RequestMethod.POST)
+	public ModelAndView getMember(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO memberDTO = memberService.getMember(id);
+		mav.addObject("memberDTO", memberDTO);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/modify", method = RequestMethod.POST)
+	@ResponseBody
+	public void modify(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+		memberService.modify(memberDTO);
+		session.invalidate();
+	}
 	
 }
