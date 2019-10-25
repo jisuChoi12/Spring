@@ -3,6 +3,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet" href="../css/board.css">
+<form id="boardSearchForm">
+<div style="width: 700px; padding-left: 100px;">
+	<input type="hidden" id="pg" name="pg" value="${pg }">
+	<select id="searchOption" name="searchOption" style="width: 100px;">
+		<option value="id" id="id">작성자</option>
+		<option value="subject" id="subject">제목</option>
+	</select>
+	<input type="text" id="keyword" name="keyword" value="${keyword }" placeholder="검색어를 입력하세요" size="30%">
+	<input type="button" value="검색" id="searchBtn">
+	<div id="searchDiv" style="display: inline-block; width: 100px;"></div>
+	<br><br>
+</div>
+</form>
+<table id="boardListTable" border="1" frame="hsides" rules="rows" cellspacing="0" cellpadding="2" width="800px">
+	<tr>
+		<th width="100">글번호</th>
+		<th width="300">제목</th>
+		<th width="100">작성자</th>
+		<th width="100">작성일</th>
+		<th width="100">조회수</th>
+	</tr>
+</table>
+<br>
+<div id="boardPagingDiv" style="display: inline-block; float: left; text-align: center; width: 100%; cursor: pointer;"></div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../js/board.js" type="text/javascript"></script>
+<script type="text/javascript">
+function boardSearch(pg){
+	$('input[name=pg]').val(pg);
+	$('#searchBtn').trigger('click','trigger');
+}
+</script>
+
+<%-- <link rel="stylesheet" href="../css/board.css">
 
 <div style="width: 700px;">
 	<div id="searchDiv"></div>
@@ -26,4 +60,4 @@
 <br>
 <div id="boardPagingDiv" style="display: inline-block; float: left; text-align: center; width: 100%; cursor: pointer;"></div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="../js/board.js" type="text/javascript"></script>
+<script src="../js/board.js" type="text/javascript"></script> --%>

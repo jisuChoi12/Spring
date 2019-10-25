@@ -7,16 +7,18 @@ import board.bean.BoardDTO;
 
 public interface BoardDAO {
 
-	void writeBoard(BoardDTO boardDTO);
+	public void writeBoard(BoardDTO boardDTO);
 
-	List<BoardDTO> getBoardList(Map<String, Integer> map);
+	public List<BoardDTO> getBoardList(Map<String, Integer> map);
 
-	int getTotalA();
+	public int getTotalA();
 
-	BoardDTO getBoardView(int seq);
+	public BoardDTO getBoardView(int seq);
 
-	List<BoardDTO> getBoardSearchList(Map<String, Object> map);
+	public List<BoardDTO> getBoardSearchList(Map<String, String> map);
 
-	int getSearchTotalA(Map<String, Object> map);
+	public int getSearchTotalA(Map<String, String> map);
+
+	public void boardModify(Map<String, Object> map);
 
 }

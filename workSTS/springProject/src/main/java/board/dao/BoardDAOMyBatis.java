@@ -37,12 +37,18 @@ public class BoardDAOMyBatis implements BoardDAO{
 	}
 
 	@Override
-	public List<BoardDTO> getBoardSearchList(Map<String, Object> map) {
+	public List<BoardDTO> getBoardSearchList(Map<String, String> map) {
 		return sqlSession.selectList("boardSQL.getBoardSearchList", map);
 	}
 
 	@Override
-	public int getSearchTotalA(Map<String, Object> map) {
+	public int getSearchTotalA(Map<String, String> map) {
 		return sqlSession.selectOne("boardSQL.getSearchTotalA",map);
+	}
+
+	@Override
+	public void boardModify(Map<String, Object> map) {
+		sqlSession.update("boardSQL.boardModify",map);
+		
 	}
 }

@@ -64,7 +64,7 @@ $('#boardWriteBtn').click(function(){
 			data : $('#boardWriteForm').serialize(),
 			success : function(){
 				alert("게시글 등록 완료!");
-				location.href="/springProject/main/index";
+				location.href="/springProject/board/boardList";
 			},
 			error : function(err){
 				console.log(err);
@@ -73,16 +73,16 @@ $('#boardWriteBtn').click(function(){
 	}
 });
 
-$('#searchBtn').click(function(){
+/*$('#searchBtn').click(function(){
 	$('#searchDiv').empty();
-	if($('#keyword').val()==''){
+	if($('input[name=keyword]')==''){
 		$('#searchDiv').text('검색어를 입력하세요').css('color','red').css('font-size','8pt');
 	} else {
 		$('#boardListTable tr:gt(0)').remove();
 		$.ajax({
 			type : 'POST',
 			url : '/springProject/board/boardSearch',
-			data : {'searchOption' : $('#searchOption').val(), 'keyword' : $('#keyword').val(), 'pg' : '1'},
+			data :  {'searchOption' : $('#searchOption').val(), 'keyword' : $('#keyword').val(), 'pg' : '1'},
 			dataType : 'json',
 			success : function(data){
 				$.each(data.list, function(index,items){
@@ -151,6 +151,54 @@ $('#searchBtn').click(function(){
 						}
 					});
 				});
+			},
+			error : function(err){
+				console.log(err);
+			}
+		});
+	}
+});*/
+
+$('#searchBtn').click(function(event, str){
+	$('#searchDiv').empty();
+	if($('#keyword').val()==''){
+		$('#searchDiv').text('검색어를 입력하세요').css('color','red').css('font-size','8pt');
+	} else {
+		if(str!='trigger') {
+			$('input[name=pg]').val(1);
+		}
+		$('#boardListTable tr:gt(0)').remove();
+		$.ajax({
+			type : 'POST',
+			url : '/springProject/board/boardSearch',
+			data :  {'searchOption' : $('#searchOption').val(), 'keyword' : $('#keyword').val(), 'pg' : $('input[name=pg]').val()},//$('#boardSearchForm').serialize(),// serialize는 name태그로 넘어간다
+			dataType : 'json',
+			success : function(data){
+				$.each(data.list, function(index,items){
+					$('<tr/>').append($('<td/>',{
+						align: 'center',
+						text: items.seq
+					})).append($('<td/>',{
+						
+					}).append($('<a/>',{
+						class : items.seq+'',
+						id : 'subjectA',
+						text: items.subject,
+						href : 'javascript:void(0)'
+					}))).append($('<td/>',{
+						align: 'center',
+						text: items.id
+					})).append($('<td/>',{
+						align: 'center',
+						text: items.logtime
+					})).append($('<td/>',{
+						align: 'center',
+						text: items.hit
+					})).appendTo($('#boardListTable'));
+				});
+				
+				// 페이징 처리
+				$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
 			},
 			error : function(err){
 				console.log(err);

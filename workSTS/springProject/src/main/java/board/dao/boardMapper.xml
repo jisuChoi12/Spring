@@ -24,7 +24,7 @@
 		select count(*) as
 		totalA from board
 	</select>
-	<!-- 게시글 -->
+	<!-- 게시글 --><!-- parameterType="String"으로 받고 select * from board where seq = #{seq, JdbcType=INTEGER}로 해도 된다 -->
 	<select id="getBoardView" parameterType="Integer" resultType="board">
 		select
 		* from board where seq=#{seq}
@@ -46,6 +46,12 @@
 		select count(*) as totalA from board where ${searchOption}
 		like '%'||#{keyword}||'%'
 	</select>
+	<!-- 게시글 수정 -->
+	<update id="boardModify" parameterType="java.util.Map">
+		update board set
+		subject=#{subject}, content=#{content}, logtime=sysdate where
+		seq=#{seq}
+	</update>
 	
 	
 	
@@ -53,12 +59,6 @@
 	<update id="boardHit" parameterType="Integer">
 		update board set hit=hit+1
 		where seq=#{seq}
-	</update>
-	<!-- 게시글 수정 -->
-	<update id="boardModify" parameterType="java.util.Map">
-		update board set
-		subject=#{subject}, content=#{content}, logtime=sysdate where
-		seq=#{seq}
 	</update>
 	<!-- 게시글 삭제 -->
 	<delete id="boardDelete" parameterType="Integer">
