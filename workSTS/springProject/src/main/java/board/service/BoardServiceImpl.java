@@ -51,4 +51,16 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
+	@Override
+	public void boardReply(Map<String, String> map) {
+		boardDAO.boardReply(map);
+		
+	}
+
+	@Override
+	public void boardDelete(int seq) {
+		boardDAO.boardDelete(seq);
+		
+	}
+
 }

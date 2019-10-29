@@ -51,4 +51,16 @@ public class BoardDAOMyBatis implements BoardDAO{
 		sqlSession.update("boardSQL.boardModify",map);
 		
 	}
+
+	@Override
+	public void boardReply(Map<String, String> map) {
+		sqlSession.insert("boardSQL.boardReply", map);
+		
+	}
+
+	@Override
+	public void boardDelete(int seq) {
+		sqlSession.delete("boardSQL.boardDelete", seq);
+		
+	}
 }

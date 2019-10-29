@@ -13,7 +13,7 @@
 		<!-- 로그인 상태 -->
 		<a href="/springProject/board/boardWriteForm" style="color: white;">글쓰기</a>&emsp;
 		<c:if test="${sessionScope.memId eq 'admin' }">
-			<a href="/springProject/imageboard/imageBoardWriteForm" style="color: white;">이미지등록</a>
+			<a href="/springProject/imageboard/imageboardWriteForm" style="color: white;">이미지등록</a>
 			<!-- 로그인 아이디가 admin 비밀번호는 111 -->
 			&emsp;
 		</c:if>

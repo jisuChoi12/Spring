@@ -28,7 +28,19 @@ $(document).ready(function(){
 					align: 'center',
 					text: items.hit
 				})).appendTo($('#boardListTable'));
-			});
+				
+				// 답글
+				for(i=0; i<items.lev; i++){
+					$('.'+items.seq).before('&emsp;');
+				}
+				if(items.lev!=0){
+//					$('.'+items.seq).before('<img src="../image/reply.gif">');
+					$('.'+items.seq).before($('<img/>',{
+						src : '../image/reply.gif'
+					}));
+				}
+				
+			}); // each
 			
 			// 페이징 처리
 			$('#boardPagingDiv').html(data.boardPaging.pagingHTML);

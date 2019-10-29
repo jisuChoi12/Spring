@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import board.bean.BoardDTO;
 import board.bean.BoardPaging;
+import board.dao.BoardDAO;
 import board.service.BoardService;
 
 @Controller
@@ -193,6 +194,43 @@ public class BoardController {
 		boardService.boardModify(map);
 	}
 	
+	@RequestMapping(value="/board/boardReplyForm", method=RequestMethod.POST)
+	public String boardReplyForm(@RequestParam String seq, @RequestParam String pg, Model model) {
+		model.addAttribute("pseq", seq);//원글번호
+		model.addAttribute("pg", pg);
+		model.addAttribute("display", "/board/boardReplyForm.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="/board/boardReply", method = RequestMethod.POST)
+	@ResponseBody
+	public void boardReply(@RequestParam Map<String, String> map, HttpSession session) {
+		String id = (String)session.getAttribute("memId");
+		String name = (String)session.getAttribute("memName");
+		String email = (String)session.getAttribute("memEmail");
+		
+		// map안에는 이미 pseq, subject, content
+		map.put("id", id);
+		map.put("name", name);
+		map.put("email", email);
+		
+		// 원글
+		BoardDTO pDTO = boardService.getBoardView(Integer.parseInt(map.get("pseq")));
+		map.put("ref", pDTO.getRef()+"");
+		map.put("lev", pDTO.getLev()+"");
+		map.put("step", pDTO.getStep()+"");
+		
+		boardService.boardReply(map);
+		
+	}
+	
+	@RequestMapping(value="/board/boardDelete", method = RequestMethod.POST)
+	public String boardDelete(@RequestParam String seq, String pg, Model model) {
+		boardService.boardDelete(Integer.parseInt(seq));
+		model.addAttribute("pg", pg);
+		model.addAttribute("display", "/board/boardList.jsp");
+		return "/main/index";
+	}
 }
 
 
