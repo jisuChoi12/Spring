@@ -17,7 +17,7 @@
 			<!-- 로그인 아이디가 admin 비밀번호는 111 -->
 			&emsp;
 		</c:if>
-		<a href="/springProject/imageboard/imageboardList?pg=1" style="color: white;">이미지목록</a>&emsp;
+		<a href="/springProject/imageboard/imageboardList" style="color: white;">이미지목록</a>&emsp;
 	</c:if> <a href="/springProject/board/boardList" style="color: white;">목록</a>
 </font>
 

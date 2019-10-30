@@ -62,7 +62,7 @@ $(document).ready(function(){
 	$('#modifyAndDeleteBtnDiv').hide();
 	$.ajax({
 		type : 'POST',
-		url : '/springProject/board/getBoardView',
+		url : '/springProject/imageboard/getImageView',
 		data : {'seq' : $('#seq').val(), 'pg' : $('#pg').val()},
 		dataType : 'json',
 		success : function(data){

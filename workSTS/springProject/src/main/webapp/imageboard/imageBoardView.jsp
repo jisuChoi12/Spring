@@ -3,45 +3,57 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:if test="${imageBoardDTO!=null }">
-	<table border="1" frame="hsides" rules="rows" cellspacing="0"
-		cellpadding="5">
+	<table border="1" frame="hsides" rules="rows" cellspacing="0" cellpadding="5">
 		<tr>
-			<td rowspan="4"><img src="../storage/${imageBoardDTO.image1 }"
+			<td rowspan="4"><div style="display: inline-block;"><img src="../storage/${imageBoardDTO.image1 }"
 				height="150" width="150" id="productImg"><img
 				src="../image/zoom.png" onclick="bigImage()"
-				style="position: relative; left: -30px"></td>
+				style="position: relative; left: -30px"></div></td>
 			<td>상품명</td>
-			<td>${imageBoardDTO.imageName }</td>
+			<td><div id="imageName" style="display: inline-block;"></div></td>
 		</tr>
 		<tr>
 			<td>단가</td>
-			<td><fmt:formatNumber value="${imageBoardDTO.imagePrice }"
-					pattern="#,###" /></td>
+			<td><fmt:formatNumber value="${imageBoardDTO.imagePrice }" pattern="#,###" /></td>
 		</tr>
 		<tr>
 			<td>개수</td>
-			<td>${imageBoardDTO.imageQty }</td>
+			<td><div id="imageQty" style="display: inline-block;"></div></td>
 		</tr>
 		<tr>
 			<td>합계</td>
-			<td><fmt:formatNumber
-					value="${imageBoardDTO.imageQty*imageBoardDTO.imagePrice }"
-					pattern="#,###" /></td>
+			<td><fmt:formatNumber value="${imageBoardDTO.imageQty*imageBoardDTO.imagePrice }" pattern="#,###" /></td>
 		</tr>
 		<tr>
-			<td colspan="6"><textarea
-					style="height: 180px; width: 450px; resize: none; border: none;"
-					readonly="readonly">${imageBoardDTO.imageContent }</textarea></td>
+			<td colspan="6">
+				<textarea style="height: 180px; width: 450px; resize: none; border: none;"
+					readonly="readonly">${imageBoardDTO.imageContent }
+				</textarea>
+			</td>
 		</tr>
 		<tr>
-			<td colspan="6" align="center"><input type="button" value="목록"
-				onclick="location.href='/miniproject/imageboard/imageboardList.do?pg=${pg}'">
+			<td colspan="6" align="center">
+				<input type="button" value="목록" onclick="location.href='/springProject/imageboard/imageboardList?pg=${pg}'">
 			</td>
 		</tr>
 	</table>
-</c:if>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.ajax({
+		type : 'POST',
+		url : '/springProject/imageboard/getImageView',
+		data : {'seq' : ${seq}},
+		dataType : 'json',
+		success : function(data){
+			alert(JSON.stringify(data));
+		},
+		error : function(err){
+			console.log(err);
+		}
+	});
+});
+</script>
 <script type="text/javascript">
 	function bigImage() {
 		var newWindow = window.open("", "", "width=520, height=520");

@@ -7,31 +7,25 @@
 		insert into imageboard values(seq_imageboard.nextval,#{imageId},#{imageName},#{imagePrice},#{imageQty},#{imageContent},#{image1},sysdate)
 		<!-- insert into imageboard values(seq_imageboard.nextval,#{imageId},#{imageName},#{imagePrice},#{imageQty},#{imageContent},#{image1},sysdate,#{image2}) -->
 	</insert>
-	
-	
 	<!-- 이미지 목록 -->
-	<select id="imageboardList" parameterType="java.util.Map" resultType="imageboard">
+	<select id="getImageboardList" parameterType="java.util.Map" resultType="imageboard">
 		select * from 
 		(select rownum as rn, temp.* from 
-		(select seq,imageid,imageName,imagePrice,imageQty,imageContent,image1,to_char(logtime,'YYYY.MM.DD') as logtime from imageboard order by seq desc) temp
+		(select * from imageboard order by seq desc) temp
 		) where rn between #{startNum} and #{endNum}
 	</select>
+	<!-- 이미지 삭제 -->
+	<delete id="deleteImage" parameterType="java.util.Map">
+		delete imageboard where seq in <foreach item="seq" index="index" collection="check" open="(" separator="," close=")">#{seq}</foreach>
+	</delete>
+	<!-- 이미지뷰 -->
+	<select id="getImageView" resultType="imageboard">
+		select * from imageboard where seq=#{seq}
+	</select>
+	
 	<!-- 전체 이미지 수 -->
 	<select id="getImageboardTotalArticle" resultType="Integer">
 		select count(*) as totalA from imageboard 
 	</select>
-	<!-- 이미지뷰 -->
-	<select id="getImageBoard" parameterType="java.util.Map" resultType="imageboard">
-		select * from imageboard where seq=#{seq}
-	</select>
-	<!-- 이미지 삭제 -->
-	<!-- <delete id="deleteImage" parameterType="String">
-		delete from imageboard where seq=#{seq}
-	</delete> -->
-	<!-- <delete id="deleteImage">
-		delete imageboard where seq in <foreach item="item" index="index" collection="check" open="(" separator="," close=")">#{item}</foreach>
-	</delete> -->
-	<delete id="deleteImage" parameterType="java.util.Map">
-		delete imageboard where seq in <foreach item="seq" index="index" collection="check" open="(" separator="," close=")">#{seq}</foreach>
-	</delete>
+
 </mapper>
