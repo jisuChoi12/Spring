@@ -13,6 +13,8 @@ public interface ImageboardService {
 
 	public void deleteImage(String[] check);
 
-	public ImageboardDTO getImageView(String seq);
+	public ImageboardDTO getImageboardView(int seq);
+
+	public int getImageboardTotalA();
 
 }

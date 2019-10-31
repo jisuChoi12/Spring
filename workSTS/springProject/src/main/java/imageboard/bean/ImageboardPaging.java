@@ -1,5 +1,8 @@
 package imageboard.bean;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ImageboardPaging {
 	private int currentPage; // 현재페이지
 	private int pageBlock; // 3개씩 [1][2][3][다음] -> [이전][4][5][6][다음] (현재페이지로 구분)
@@ -53,19 +56,19 @@ public class ImageboardPaging {
 		}
 		
 		if(startPage>pageBlock) { // [이전]이 나오는 시점
-			pagingHTML.append("[<a id='prev' href='imageboardList.do?pg="+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
+			pagingHTML.append("[<a id='prev' href='imageboardList?pg="+(startPage-1)+"'>이전</a>]"); // [이전]을 누르면 startPage-1 페이지로 이동 
 		}
 		
 		for (int i = startPage; i <= endPage; i++) {
 			if(i==currentPage) {
-				pagingHTML.append("[<a id='currentPaging' href='imageboardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='currentPaging' href='imageboardList?pg="+i+"'>"+i+"</a>]");
 			} else {
-				pagingHTML.append("[<a id='paging' href='imageboardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("[<a id='paging' href='imageboardList?pg="+i+"'>"+i+"</a>]");
 			}
 		}
 		
 		if(endPage<totalPage) { // [다음]이 나오는 시점
-			pagingHTML.append("[<a id='next' href='imageboardList.do?pg="+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
+			pagingHTML.append("[<a id='next' href='imageboardList?pg="+(endPage+1)+"'>다음</a>]"); // [다음]을 누르면 endPage+1 페이지로 이동
 		}
 		
 	}

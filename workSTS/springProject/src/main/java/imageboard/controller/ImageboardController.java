@@ -21,12 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardPaging;
 import imageboard.service.ImageboardService;
 
 @Controller
 public class ImageboardController {
 	@Autowired
 	private ImageboardService imageboardService;
+	@Autowired
+	private ImageboardPaging imageboardPaging;
 
 	@RequestMapping(value = "/imageboard/imageboardWriteForm", method = RequestMethod.GET)
 	public String imageboardWriteForm(Model model) {
@@ -133,9 +136,18 @@ public class ImageboardController {
 		
 		List<ImageboardDTO> list = imageboardService.getImageboardList(map);
 		
+		// 페이징 처리
+		int totalA = imageboardService.getImageboardTotalA();
+		imageboardPaging.setCurrentPage(Integer.parseInt(pg));
+		imageboardPaging.setPageBlock(3);
+		imageboardPaging.setPageSize(3);
+		imageboardPaging.setTotalA(totalA);
+		imageboardPaging.makePagingHTML();
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pg", pg);
 		mav.addObject("list", list);
+		mav.addObject("imageboardPaging", imageboardPaging);
 		mav.setViewName("jsonView");
 		
 		return mav;
@@ -156,13 +168,12 @@ public class ImageboardController {
 		return "/main/index";
 	}
 	
-	@RequestMapping(value="/imageboard/getImageView", method = RequestMethod.POST)
-	public ModelAndView getImageView(@RequestParam String seq) {
-		ImageboardDTO imageboardDTO = imageboardService.getImageView(seq);
-		
+	@RequestMapping(value="/imageboard/getImageboardView", method = RequestMethod.POST)
+	public ModelAndView getImageboardView(@RequestParam String seq) {
+		ImageboardDTO imageboardDTO = imageboardService.getImageboardView(Integer.parseInt(seq));
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("imageboardDTO", imageboardDTO);
-		
+		mav.setViewName("jsonView");
 		return mav;
 	}
 }

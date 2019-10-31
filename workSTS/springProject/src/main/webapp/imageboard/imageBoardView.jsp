@@ -5,30 +5,31 @@
 
 	<table border="1" frame="hsides" rules="rows" cellspacing="0" cellpadding="5">
 		<tr>
-			<td rowspan="4"><div style="display: inline-block;"><img src="../storage/${imageBoardDTO.image1 }"
-				height="150" width="150" id="productImg"><img
-				src="../image/zoom.png" onclick="bigImage()"
-				style="position: relative; left: -30px"></div></td>
+			<td rowspan="4" width="200px;">
+				<div style="display: inline-block;">
+					<img id="image1" height="150" width="150" id="productImg">
+					<!-- <img src="../image/zoom.png" onclick="bigImage()" style="position: relative; left: -30px; cursor: pointer;"> -->
+				</div>
+			</td>
 			<td>상품명</td>
-			<td><div id="imageName" style="display: inline-block;"></div></td>
+			<td><span id="imageNameSpan"></span></td>
 		</tr>
 		<tr>
 			<td>단가</td>
-			<td><fmt:formatNumber value="${imageBoardDTO.imagePrice }" pattern="#,###" /></td>
+			<td><span id="imagePriceSpan"></span></td>
 		</tr>
 		<tr>
 			<td>개수</td>
-			<td><div id="imageQty" style="display: inline-block;"></div></td>
+			<td><span id="imageQtySpan"></span></td>
 		</tr>
 		<tr>
 			<td>합계</td>
-			<td><fmt:formatNumber value="${imageBoardDTO.imageQty*imageBoardDTO.imagePrice }" pattern="#,###" /></td>
+			<td><span id="imageTotalSpan"></span></td>
 		</tr>
 		<tr>
 			<td colspan="6">
-				<textarea style="height: 180px; width: 450px; resize: none; border: none;"
-					readonly="readonly">${imageBoardDTO.imageContent }
-				</textarea>
+				<pre style="height: 180px; width: 450px; resize: none; border: none;"><span id="imageContentSpan"></span>
+				</pre>
 			</td>
 		</tr>
 		<tr>
@@ -42,28 +43,22 @@
 $(document).ready(function(){
 	$.ajax({
 		type : 'POST',
-		url : '/springProject/imageboard/getImageView',
-		data : {'seq' : ${seq}},
+		url : '/springProject/imageboard/getImageboardView',
+		data : 'seq=${seq}',
 		dataType : 'json',
 		success : function(data){
-			alert(JSON.stringify(data));
+			/* alert(JSON.stringify(data)); */
+			var total = data.imageboardDTO.imagePrice*data.imageboardDTO.imageQty;
+			$('#image1').prop('src','../storage/'+data.imageboardDTO.image1);
+			$('#imageNameSpan').text(data.imageboardDTO.imageName);
+			$('#imagePriceSpan').text(data.imageboardDTO.imagePrice.toLocaleString());
+			$('#imageQtySpan').text(data.imageboardDTO.imageQty);
+			$('#imageTotalSpan').text(total.toLocaleString());
+			$('#imageContentSpan').text(data.imageboardDTO.imageContent);
 		},
 		error : function(err){
 			console.log(err);
 		}
 	});
 });
-</script>
-<script type="text/javascript">
-	function bigImage() {
-		var newWindow = window.open("", "", "width=520, height=520");
-		var img = newWindow.document.createElement("img");
-		img
-				.setAttribute("src",
-						"http://localhost:8080/miniproject/storage/${imageBoardDTO.image1}");
-		img.setAttribute("width", "500");
-		img.setAttribute("height", "500");
-		img.setAttribute("style", "cursor: pointer");
-		newWindow.document.body.appendChild(img);
-	}
 </script>

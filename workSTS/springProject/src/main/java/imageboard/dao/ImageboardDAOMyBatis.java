@@ -37,7 +37,12 @@ public class ImageboardDAOMyBatis implements ImageboardDAO {
 	}
 
 	@Override
-	public ImageboardDTO getImageView(String seq) {
-		return sqlSession.selectOne("imageboardSQL.getImageView", seq);
+	public ImageboardDTO getImageboardView(int seq) {
+		return sqlSession.selectOne("imageboardSQL.getImageboardView", seq);
+	}
+	
+	@Override
+	public int getImageboardTotalA() {
+		return sqlSession.selectOne("imageboardSQL.getImageboardTotalA");
 	}
 }

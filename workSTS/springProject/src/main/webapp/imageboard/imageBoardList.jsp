@@ -19,9 +19,7 @@
 		<input type="button" value="선택삭제" id="checkDeleteBtn" style="float: right;">
 	</div>
 	<br>
-	<div
-		style="display: inline-block; float: left; text-align: center; width: 100%;">${boardPaging.pagingHTML }
-	</div>
+	<div id="imageboardPagingDiv" style="display: inline-block; float: left; text-align: center; width: 100%;"></div>
 </form>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -65,8 +63,10 @@
 				 	$('.'+items.seq).click(function(){
 				 		location.href='/springProject/imageboard/imageboardView?seq='+items.seq+'&pg=${pg}';
 				 	});
-					
 				}); // each 
+				
+				$('#imageboardPagingDiv').html(data.imageboardPaging.pagingHTML);
+				
 			},
 			error : function(err){
 				console.log(err);

@@ -32,8 +32,13 @@ public class ImageboardServiceImpl implements ImageboardService {
 	}
 
 	@Override
-	public ImageboardDTO getImageView(String seq) {
-		return imageboardDAO.getImageView(seq);
+	public ImageboardDTO getImageboardView(int seq) {
+		return imageboardDAO.getImageboardView(seq);
+	}
+
+	@Override
+	public int getImageboardTotalA() {
+		return imageboardDAO.getImageboardTotalA();
 	}
 
 }

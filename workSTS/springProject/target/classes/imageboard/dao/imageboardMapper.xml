@@ -19,12 +19,12 @@
 		delete imageboard where seq in <foreach item="seq" index="index" collection="check" open="(" separator="," close=")">#{seq}</foreach>
 	</delete>
 	<!-- 이미지뷰 -->
-	<select id="getImageView" resultType="imageboard">
+	<select id="getImageboardView" resultType="imageboard">
 		select * from imageboard where seq=#{seq}
 	</select>
 	
 	<!-- 전체 이미지 수 -->
-	<select id="getImageboardTotalArticle" resultType="Integer">
+	<select id="getImageboardTotalA" resultType="Integer">
 		select count(*) as totalA from imageboard 
 	</select>
 
