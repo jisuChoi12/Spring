@@ -5,23 +5,30 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import imageboard.bean.ImageboardDTO;
 import imageboard.bean.ImageboardPaging;
+import imageboard.bean.ImageboardQnaDTO;
 import imageboard.service.ImageboardService;
 
 @Controller
@@ -173,6 +180,61 @@ public class ImageboardController {
 		ImageboardDTO imageboardDTO = imageboardService.getImageboardView(Integer.parseInt(seq));
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("imageboardDTO", imageboardDTO);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="/imageboard/imageboardQna", method = RequestMethod.GET)
+	public String imageboardQna(@RequestParam String productCode, @RequestParam (defaultValue = "1", required = false) String pg, Model model, HttpSession session) {
+		model.addAttribute("productCode", productCode);
+		model.addAttribute("pg", pg);
+		model.addAttribute("memId", (String)session.getAttribute("memId"));
+		model.addAttribute("display", "/imageboard/imageboardQna.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="/imageboard/imageboardQnaWrite", method = RequestMethod.POST)
+	@ResponseBody
+	public void imageboardQnaWrite(@RequestParam Map<String, String > map) {
+		//System.out.println(map.get("summernote"));
+		System.out.println("상품코드 : "+map.get("productCode"));
+		 if(map.get("secretCheckBox")==null) { // 비밀글 체크 안했을때
+		 map.put("secretCheckBox", "0"); }
+		 imageboardService.imageboardQnaWrite(map);
+	}
+	
+	@RequestMapping(value="/imageboard/imageUpload", method = RequestMethod.POST, produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String handleFileUpload(@RequestParam("uploadFile") MultipartFile multiPartFile){
+		String filePath = "C:/Spring/workSTS/springProject/src/main/webapp/storage"; // 원하는 위치
+		String fileName = multiPartFile.getOriginalFilename();
+		File file = new File (filePath, fileName);
+		try {
+			FileCopyUtils.copy(multiPartFile.getInputStream(), new FileOutputStream(file)); // spring저장소에서 storage로 복사
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fileName;
+	}
+	
+	@RequestMapping(value="/imageboard/imageboardQnaList", method = RequestMethod.GET)
+	public String imageboardQnaList(@RequestParam(defaultValue = "1", required = false) String pg, String productCode, Model model) {
+		model.addAttribute("productCode", productCode);
+		model.addAttribute("pg", pg);
+		model.addAttribute("display", "/imageboard/imageboardQnaList.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="/imageboard/getImageboardQnaList", method= RequestMethod.POST)
+	public ModelAndView getImageboardQnaList(@RequestParam(defaultValue="1",required = false)String pg, String productCode) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("productCode", productCode);
+		
+		List<ImageboardQnaDTO> list = imageboardService.getImageboardQnaList(map);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pg", pg);
+		mav.addObject("list",list);
 		mav.setViewName("jsonView");
 		return mav;
 	}

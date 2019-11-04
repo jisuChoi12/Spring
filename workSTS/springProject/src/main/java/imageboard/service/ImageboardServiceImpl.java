@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardQnaDTO;
 import imageboard.dao.ImageboardDAO;
 
 @Service("imageboardService")
@@ -39,6 +40,17 @@ public class ImageboardServiceImpl implements ImageboardService {
 	@Override
 	public int getImageboardTotalA() {
 		return imageboardDAO.getImageboardTotalA();
+	}
+
+	@Override
+	public void imageboardQnaWrite(Map<String, String> map) {
+		imageboardDAO.imageboardQnaWrite(map);
+		
+	}
+
+	@Override
+	public List<ImageboardQnaDTO> getImageboardQnaList(Map<String, String> map) {
+		return imageboardDAO.getImageboardQnaList(map);
 	}
 
 }

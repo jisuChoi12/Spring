@@ -35,6 +35,9 @@
 		<tr>
 			<td colspan="6" align="center">
 				<input type="button" value="목록" onclick="location.href='/springProject/imageboard/imageboardList?pg=${pg}'">
+				<%-- <input type="button" value="상품문의하기" onclick="location.href='/springProject/imageboard/imageboardQna?pg=${pg}&seq=${seq}'"> --%>
+				<input type="button" value="상품문의하기" onclick="location.href='/springProject/imageboard/imageboardQna?pg=${pg}&productCode=8809656139995'">
+				<input type="button" value="상품문의리스트" onclick="location.href='/springProject/imageboard/imageboardQnaList?pg=1&productCode=8809656139995'">
 			</td>
 		</tr>
 	</table>

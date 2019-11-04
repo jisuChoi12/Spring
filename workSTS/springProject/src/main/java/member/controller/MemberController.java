@@ -170,4 +170,13 @@ public class MemberController {
 		session.invalidate();
 	}
 	
+	@RequestMapping(value="/member/attendance", method = RequestMethod.GET)
+	public ModelAndView attendance(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/member/attendance.jsp");
+		mav.setViewName("/main/index");
+		mav.addObject("memId", (String)session.getAttribute("memId"));
+		return mav;
+	}
+	
 }

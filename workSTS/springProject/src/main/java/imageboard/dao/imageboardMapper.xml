@@ -27,5 +27,12 @@
 	<select id="getImageboardTotalA" resultType="Integer">
 		select count(*) as totalA from imageboard 
 	</select>
-
+	
+	
+	<insert id="imageboardQnaWrite" parameterType="java.util.Map">
+		insert into productQnABoard(seq,productCode,id,subject,content,secretStatus,logtimeQ,replyStatus) values (seq_productQnaBoard.nextval,#{productCode},#{id},#{subject},#{summernote},#{secretCheckBox},sysdate,0)
+	</insert>
+	<select id="getImageboardQnaList" parameterType="java.util.Map" resultType="imageboardQna">
+		select * from productQnaBoard where productCode = #{productCode}
+	</select>
 </mapper>

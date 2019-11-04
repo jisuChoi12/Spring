@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardQnaDTO;
 
 @Transactional
 @Repository("imageboardDAO")
@@ -44,5 +45,16 @@ public class ImageboardDAOMyBatis implements ImageboardDAO {
 	@Override
 	public int getImageboardTotalA() {
 		return sqlSession.selectOne("imageboardSQL.getImageboardTotalA");
+	}
+
+	@Override
+	public void imageboardQnaWrite(Map<String, String> map) {
+		sqlSession.insert("imageboardSQL.imageboardQnaWrite", map);
+		
+	}
+
+	@Override
+	public List<ImageboardQnaDTO> getImageboardQnaList(Map<String, String> map) {
+		return sqlSession.selectList("imageboardSQL.getImageboardQnaList", map);
 	}
 }

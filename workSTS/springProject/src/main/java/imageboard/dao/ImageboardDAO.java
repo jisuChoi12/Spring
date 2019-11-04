@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardQnaDTO;
 
 public interface ImageboardDAO {
 
@@ -16,5 +17,9 @@ public interface ImageboardDAO {
 	public ImageboardDTO getImageboardView(int seq);
 
 	public int getImageboardTotalA();
+
+	public void imageboardQnaWrite(Map<String, String> map);
+
+	public List<ImageboardQnaDTO> getImageboardQnaList(Map<String, String> map);
 
 }
