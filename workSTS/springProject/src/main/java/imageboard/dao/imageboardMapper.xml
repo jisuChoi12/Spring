@@ -35,4 +35,10 @@
 	<select id="getImageboardQnaList" parameterType="java.util.Map" resultType="imageboardQna">
 		select * from productQnaBoard where productCode = #{productCode}
 	</select>
+	<select id="getImageboardQna" parameterType="java.util.Map" resultType="imageboardQna">
+		select * from productQnaBoard where seq = #{seq}
+	</select>
+	<update id="imageboardQnaModify" parameterType="java.util.Map">
+		update productQnaBoard set subject=#{subject}, content=#{summernote}, secretStatus=#{secretCheckBox}, logtimeQ=sysdate where seq=#{seq}
+	</update>
 </mapper>

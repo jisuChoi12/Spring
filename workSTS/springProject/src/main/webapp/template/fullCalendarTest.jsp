@@ -18,7 +18,7 @@
 </head>
 
 <body>
-	<div id='calendar' style="width: 600px;"></div>
+    <div id='calendar'></div>
 </body>
 
 <div id="fullCalModal" class="modal fade">
@@ -33,17 +33,16 @@
     Test
 </div>
 
-
 <script>
 
     function loadCalendar() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            height : 500,
-        	locale: 'ko',
+            locale: 'ko',
             selectable: true,
             plugins: ['interaction', 'dayGrid'],
-            firstDay : 1,       
+            firstDay : 1,
+            
             header: {
                 left: 'attBtn',
                 center: 'title',
@@ -68,7 +67,7 @@
             			// 통신 성공시 버튼 바꾸고, property disabled 만들기
             			$.ajax({
             				type : 'POST',
-            				url : '/springProject/member/attendances',
+            				url : '/member/attendances',
             				data : {'id' : 'orange'},
             				dataType : 'text',
             				success : function(data){
@@ -120,3 +119,33 @@
     }
 </script>
 
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+	<meta charset='utf-8' />
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.1/fullcalendar.min.css">
+ 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.1/fullcalendar.print.css">
+
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.1/fullcalendar.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.1/locale/ko.js"></script>
+
+   	<script type="text/javascript">
+	$(document).ready(function() {
+   		$('#calendar').fullCalendar({
+    		center: 'title',
+    	    right: 'month,agendaWeek,agendaDay',
+    	    theme : true
+   		});
+    }); 
+  	</script>
+  </head>
+  <body>
+
+    <div id='calendar'></div>
+
+  </body>
+</html> --%>

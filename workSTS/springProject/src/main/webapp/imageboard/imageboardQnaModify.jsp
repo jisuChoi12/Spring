@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<form id="imageboardQnaWriteForm" method="post"
-	action="/springProject/imageboard/imageboardQnaWrite">
+    pageEncoding="UTF-8"%>
+    
+<form id="imageboardQnaModifyForm" method="post"
+	action="/springProject/imageboard/imageboardQnaModifyOk">
 	<input type="hidden" id="memId" value="${memId }">
 	<input type="hidden" id="productCode" name="productCode" value="${productCode }">
+	<input type="hidden" id="seq" name="seq" value="${seq }">
 	<table id="qnaTable" border="1" cellspacing="0" cellpadding="5">
 		<tr>
 			<th width=120>이름</th>
@@ -47,9 +48,9 @@
 		</tr>
 		<tr>
 			<td colspan=2 align="center"><input type="button"
-				id="productQnaWriteBtn" value="등록"> <input type="button"
+				id="productQnaModifyBtn" value="수정"> <input type="button"
 				id="refresh" value="다시작성"
-				onclick="location.href='/springProject/imageboard/imageboardQna?pg=${pg}&productCode=8809656139995'">
+				onclick="location.href='/springProject/imageboard/imageboardQnaModify?productCode=${productCode}&seq=${imageboardQnaDTO.seq}'">
 			</td>
 		</tr>
 	</table>
@@ -85,7 +86,11 @@
 			}
 		});
 		
+		$('#subject').val('${imageboardQnaDTO.subject}');
+		$('#summernote').html('${imageboardQnaDTO.content}');
+		
 		$('#summernote').summernote({
+			
 		    height : 300, // 에디터의 높이
 		    width : 700,
 		    minHeight : null,
@@ -124,7 +129,7 @@
 		});
 	}
 	
-	$('#productQnaWriteBtn').click(function(){
+	$('#productQnaModifyBtn').click(function(){
 		$('#subjectDiv').empty();
 		$('#contentDiv').empty();
 		if($('#subject').val()==''){
@@ -137,10 +142,10 @@
 			} else {
 				$('#secretCheckBox').val('0');
 			}
-			$('form[id=imageboardQnaWriteForm]').submit();
+			$('form[id=imageboardQnaModifyForm]').submit();
 		}
 	}); 
-	
+
 
 	
 </script>

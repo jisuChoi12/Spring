@@ -17,11 +17,9 @@ public class ImageboardQnaDTO {
 	private String id;
 	private String subject;
 	private String content;
-	private int secretSatus;
+	private int secretStatus;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date logtimeQ;
 	private int replyStatus;
 	private String replyContent;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date logtimeA;
 }

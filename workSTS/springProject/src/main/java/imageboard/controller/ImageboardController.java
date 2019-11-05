@@ -196,7 +196,7 @@ public class ImageboardController {
 	@RequestMapping(value="/imageboard/imageboardQnaWrite", method = RequestMethod.POST)
 	@ResponseBody
 	public void imageboardQnaWrite(@RequestParam Map<String, String > map) {
-		//System.out.println(map.get("summernote"));
+		System.out.println(map.get("summernote"));
 		System.out.println("상품코드 : "+map.get("productCode"));
 		 if(map.get("secretCheckBox")==null) { // 비밀글 체크 안했을때
 		 map.put("secretCheckBox", "0"); }
@@ -217,27 +217,68 @@ public class ImageboardController {
 		return fileName;
 	}
 	
+//	@RequestMapping(value="/imageboard/imageboardQnaList", method = RequestMethod.GET)
+//	public String imageboardQnaList(@RequestParam(defaultValue = "1", required = false) String pg, String productCode, Model model) {
+//		model.addAttribute("productCode", productCode);
+//		model.addAttribute("pg", pg);
+//		model.addAttribute("display", "/imageboard/imageboardQnaList.jsp");
+//		return "/main/index";
+//	}
+//	
+//	@RequestMapping(value="/imageboard/getImageboardQnaList", method= RequestMethod.POST)
+//	public ModelAndView getImageboardQnaList(@RequestParam(defaultValue="1",required = false)String pg, String productCode) {
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("productCode", productCode);
+//		
+//		List<ImageboardQnaDTO> list = imageboardService.getImageboardQnaList(map);
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("pg", pg);
+//		mav.addObject("list",list);
+//		mav.setViewName("jsonView");
+//		return mav;
+//	}
+	
 	@RequestMapping(value="/imageboard/imageboardQnaList", method = RequestMethod.GET)
-	public String imageboardQnaList(@RequestParam(defaultValue = "1", required = false) String pg, String productCode, Model model) {
+	public String imageboardQnaList(@RequestParam(defaultValue="1", required = false)String pg, String productCode, Model model, HttpSession session) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("productCode", productCode);
+		
+		List<ImageboardQnaDTO> list = imageboardService.getImageboardQnaList(map);
+
+		model.addAttribute("memId", (String)session.getAttribute("memId"));
+		model.addAttribute("list", list);
 		model.addAttribute("productCode", productCode);
 		model.addAttribute("pg", pg);
 		model.addAttribute("display", "/imageboard/imageboardQnaList.jsp");
 		return "/main/index";
 	}
 	
-	@RequestMapping(value="/imageboard/getImageboardQnaList", method= RequestMethod.POST)
-	public ModelAndView getImageboardQnaList(@RequestParam(defaultValue="1",required = false)String pg, String productCode) {
+	@RequestMapping(value="/imageboard/imageboardQnaModify")
+	public String imageboardQnaModifyForm(@RequestParam String productCode, String seq, Model model) {
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("productCode", productCode);
+		map.put("seq", seq);
 		
-		List<ImageboardQnaDTO> list = imageboardService.getImageboardQnaList(map);
+		ImageboardQnaDTO imageboardQnaDTO = imageboardService.getImageboardQna(map);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("pg", pg);
-		mav.addObject("list",list);
-		mav.setViewName("jsonView");
-		return mav;
+		model.addAttribute("productCode", productCode);
+		model.addAttribute("seq", seq);
+		model.addAttribute("imageboardQnaDTO", imageboardQnaDTO);
+     	model.addAttribute("display", "/imageboard/imageboardQnaModify.jsp");
+		return "/main/index";
+
 	}
+	
+	@RequestMapping(value="/imageboard/imageboardQnaModifyOk", method = RequestMethod.POST)
+	@ResponseBody
+	public void imageboardQnaModify(@RequestParam Map<String, String > map) {
+		 if(map.get("secretCheckBox")==null) { // 비밀글 체크 안했을때
+		 map.put("secretCheckBox", "0"); }
+		 imageboardService.imageboardQnaModify(map);
+	}
+	
 }
 
 // $('#imageboardWriteForm').serialize() -> ImageboardDTO

@@ -179,4 +179,10 @@ public class MemberController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/member/attendances", method = RequestMethod.POST)
+	public String attendance(@RequestParam String id, HttpSession session) {
+		System.out.println("출첵");
+		return "!";
+	}
+	
 }

@@ -22,4 +22,8 @@ public interface ImageboardService {
 
 	public List<ImageboardQnaDTO> getImageboardQnaList(Map<String, String> map);
 
+	public ImageboardQnaDTO getImageboardQna(Map<String, String> map);
+
+	public void imageboardQnaModify(Map<String, String> map);
+
 }

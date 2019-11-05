@@ -53,4 +53,15 @@ public class ImageboardServiceImpl implements ImageboardService {
 		return imageboardDAO.getImageboardQnaList(map);
 	}
 
+	@Override
+	public ImageboardQnaDTO getImageboardQna(Map<String, String> map) {
+		return imageboardDAO.getImageboardQna(map);
+	}
+
+	@Override
+	public void imageboardQnaModify(Map<String, String> map) {
+		imageboardDAO.imageboardQnaModify(map);
+		
+	}
+
 }

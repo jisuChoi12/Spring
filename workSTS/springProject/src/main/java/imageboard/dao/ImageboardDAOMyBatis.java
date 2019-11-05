@@ -57,4 +57,15 @@ public class ImageboardDAOMyBatis implements ImageboardDAO {
 	public List<ImageboardQnaDTO> getImageboardQnaList(Map<String, String> map) {
 		return sqlSession.selectList("imageboardSQL.getImageboardQnaList", map);
 	}
+
+	@Override
+	public ImageboardQnaDTO getImageboardQna(Map<String, String> map) {
+		return sqlSession.selectOne("imageboardSQL.getImageboardQna", map);
+	}
+
+	@Override
+	public void imageboardQnaModify(Map<String, String> map) {
+		sqlSession.update("imageboardSQL.imageboardQnaModify", map);
+		
+	}
 }
