@@ -15,6 +15,7 @@
 <script src='https://unpkg.com/@fullcalendar/interaction@4.3.0/main.min.js'></script>
 <script src='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.js'></script>
 <script src='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
 </head>
 
 <body>
@@ -32,9 +33,26 @@
     </div>
     Test
 </div>
-
-
 <script>
+var attDate;
+var arrDatesCount;
+
+$(document).ready(function(){
+	$.ajax({
+			type : 'POST',
+			url : '/springProject/member/getAttendances',
+			data : {'id' : '${memId}'},
+			dataType : 'JSON',
+			success : function(data){
+				attDatesCnt = data.attDates.length;
+				attDate = data.attDates[0];
+				/* alert('20'+attDate); */
+			},
+			error : function(err){
+				console.log(err);
+			}
+	}); 
+});
 
     function loadCalendar() {
         var calendarEl = document.getElementById('calendar');
@@ -45,33 +63,23 @@
             plugins: ['interaction', 'dayGrid'],
             firstDay : 1,       
             header: {
-                left: 'attBtn',
-                center: 'title',
-                right: 'prev, next',
+                left: 'title',
+                center: '',
+                right : 'attBtn'
             },
-            
-            events: [
-                {
-              		title: 'All Day Event',
-              		description: 'www',
-              		start: '2019-11-03'
-                },
-           	],
             // 출석체크를 위한 버튼 생성
             customButtons: {
             	attBtn : {
             		text : '출석체크',
             		id : 'check',
             		click : function(){
-            			// ajax 통신으로 출석 정보 저장하기
-            			// POSR "/member/attendeances" -> { status : "success", date : "2019-11-05"}
-            			// 통신 성공시 버튼 바꾸고, property disabled 만들기
             			$.ajax({
             				type : 'POST',
             				url : '/springProject/member/attendances',
-            				data : {'id' : 'orange'},
+            				data : {'id' : '${memId}'},
             				dataType : 'text',
             				success : function(data){
+            					
             					$('.fc-attBtn-button').prop('disabled',true);
                     			$(".fc-attBtn-button").html('출석완료');
             				},
@@ -79,28 +87,56 @@
             					console.log(err);
             				}
             			});
-/*             			alert("출석체크"); */   
             		}
             	}
             },
-            // 달력 정보 가져오기
-            eventSources : [
-            	{
-            		// ajax 통신으로 달력 정보 가져오기
-            		// GET "/member/attendances" -> {dateList:[ date: "2019-11-01", ... ]}
-            		/* url : '/member/attendances',
-            		type : 'GET',
-            		dataType : 'JSON',
-            		success : function(data){
-            			
-            		},
-            		error : function(){
-            			alert("에러");
-            		},  
-            		color : 'purple',
-            		textColor : 'white' */
-            	}
-            ],
+             eventSources : [{  
+            	 events: [
+                     {
+                   		title: '출석체크',
+                   		description: '10 포인트',
+                   		start: '20'+attDate  
+                     },
+                     {
+                   		title: '출석체크',
+                   		description: attDate,
+                   		start: '2019-11-01'  
+                     },
+                     {
+                    	title: '출석체크',
+                    	description: '10 포인트',
+                    	start: '2019-11-29'  
+                      }
+                	]
+            
+             	/* events : function(info, successCallback, failureCallback) { */
+             	/* events : function(start, end, callback) { 
+             		$.ajax({
+             			type : 'POST',
+             			url : '/springProject/member/getAttendances',
+             			data : {'id' : '${memId}'},
+             			dataType : 'JSON',
+             			success : function(data){
+             				addCalendarEvent(data.attDates);
+             			},
+             			error : function(err){
+             				console.log(err);
+             			}
+             		}); */
+             	/*} ,
+             	events: [
+                    {
+                  		title: '출석체크',
+                  		description: '10 포인트',
+                  		start: '2019-11-01'
+                    },
+                    {
+                  		title: '출석체크',
+                  		description: '10 포인트',
+                  		start: '2019-11-02'
+                    },
+               	] */
+             }],
         
             eventClick: function(event) {
                 console.log('modal', event);
@@ -116,7 +152,7 @@
     if (document.readyState !== 'complete') {
             document.addEventListener('DOMContentLoaded', loadCalendar);
     } else {
-            loadCalendar();
+        loadCalendar();
     }
 </script>
 

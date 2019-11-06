@@ -46,4 +46,15 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.modify(memberDTO);
 	}
 
+	@Override
+	public void insertAddendance(String id) {
+		memberDAO.insertAddendance(id);
+		
+	}
+
+	@Override
+	public String getAttDates(String id) {
+		return memberDAO.getAttDates(id);
+	}
+
 }

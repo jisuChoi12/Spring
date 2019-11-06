@@ -20,4 +20,8 @@ public interface MemberService {
 
 	public void modify(MemberDTO memberDTO);
 
+	public void insertAddendance(String id);
+
+	public String getAttDates(String id);
+
 }

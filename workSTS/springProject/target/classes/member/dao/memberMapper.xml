@@ -36,4 +36,17 @@
 		zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2}, logtime=sysdate
 		where id=#{id}
 	</update>
+	<!-- 출첵 -->
+	<select id="isAttExist" parameterType="String" resultType="Integer">
+		select count(*) from attendance where id=#{id}
+	</select>	
+	<insert id="insertAttendance" parameterType="String">
+		insert into attendance values(#{id},sysdate)
+	</insert>
+	<update id="updateAttendance" parameterType="String">
+		update attendance set attDate = concat(attDate, ','||sysdate) where id=#{id}
+	</update>
+	<select id="getAttDates" parameterType="String" resultType="String">
+		select attDate from attendance where id=#{id}
+	</select>
 </mapper>

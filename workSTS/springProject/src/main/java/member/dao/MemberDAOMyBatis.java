@@ -49,4 +49,18 @@ public class MemberDAOMyBatis implements MemberDAO {
 		sqlSession.update("memberSQL.modify",memberDTO);
 	}
 
+	@Override
+	public void insertAddendance(String id) {
+		int count = sqlSession.selectOne("memberSQL.isAttExist",id);
+		if(count==0){
+			sqlSession.insert("memberSQL.insertAttendance",id);
+		} else {
+			sqlSession.update("memberSQL.updateAttendance",id);			
+		}
+	}
+
+	@Override
+	public String getAttDates(String id) {
+		return sqlSession.selectOne("memberSQL.getAttDates",id);
+	}
 }

@@ -180,9 +180,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/attendances", method = RequestMethod.POST)
+	@ResponseBody
 	public String attendance(@RequestParam String id, HttpSession session) {
-		System.out.println("출첵");
-		return "!";
+		memberService.insertAddendance(id); // pointService 아니면 attendanceService
+		return "출석체크";
 	}
 	
+	@RequestMapping(value="/member/getAttendances", method = RequestMethod.POST)
+	public ModelAndView getAttendances(@RequestParam String id) {
+		String[] attDates = memberService.getAttDates(id).replaceAll("/", "-").split(",");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("attDates",attDates);
+		mav.setViewName("jsonView");
+		return mav;
+	}
 }

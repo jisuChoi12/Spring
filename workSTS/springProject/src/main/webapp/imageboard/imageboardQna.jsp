@@ -140,7 +140,4 @@
 			$('form[id=imageboardQnaWriteForm]').submit();
 		}
 	}); 
-	
-
-	
 </script>
